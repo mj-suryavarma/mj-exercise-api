@@ -8,7 +8,7 @@ const cors = require('cors')
 app.use(cors())
 app.options(cors())
 /// default route
-app.get('/app',(req,res) => res.json({msg: "hello world from backend"}))
+app.get('/',(req,res) => res.json({msg: "hello world from backend"}))
 
 /// static file
 app.use(express.static(path.resolve(__dirname,'../client/build')))

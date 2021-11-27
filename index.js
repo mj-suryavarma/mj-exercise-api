@@ -10,13 +10,18 @@ const ratelimit = require('express-rate-limit')
 const helmet = require('helmet')
 const xss = require('xss-clean')
 
-
+//// security
 app.use(helmet())
 app.use(xss())
 app.use(ratelimit())
 
 app.use(cors())
 app.options(cors())
+
+///// routes import 
+const userRoute = require('./routes/auth')
+const exerciseRoute = require('./routes/exercise')  
+
 /// default route
 app.get('/',(req,res) => res.json({msg: "hello world from backend"}))
 
@@ -32,9 +37,6 @@ const NotFound = require('./middleware/notfound')
 const errorHandlerMiddleware = require('./middleware/errorhandler')
 const authenticationMiddleware = require('./middleware/authentication')
 
-///// routes import 
-const userRoute = require('./routes/auth')
-const exerciseRoute = require('./routes/exercise')  
 
 
 //// db
@@ -48,7 +50,9 @@ app.use('/api/v1/exercise',authenticationMiddleware,exerciseRoute);
 
 
 
-
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));    
+  })
 
 
 // use middleware

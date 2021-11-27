@@ -22,15 +22,23 @@ app.options(cors())
 const userRoute = require('./routes/auth')
 const exerciseRoute = require('./routes/exercise')  
 
-/// default route
-app.get('/',(req,res) => res.json({msg: "hello world from backend"}))
+/// swagger
+const swaggerUI = require('swagger-ui-express')
+const YAML = require('yamljs')
+const swaggerDocument = YAML.load('./swagger.yaml')
+
+
 
 const port = process.env.PORT || 5000
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
+/// default route
+app.get('/',(req,res) =>
+ res.send('<h2>Hi, this is my Exercise API. If want to test and know more info here :</h2><a href="/api-docs">Eercise API Documentation</a>'))
 
+app.use('/api-api-docs',swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 //// middleware   import
 const NotFound = require('./middleware/notfound')

@@ -1,0 +1,267 @@
+openapi: 3.0.0
+info:
+  title: 07-exercise-api
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://mj-exercise.herokuapp.com/api/v1
+  variables: {}
+paths:
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: user login
+      operationId: userlogin
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userloginrequest'
+            example:
+              email: captain@gamil.com
+              password: captain@gamil.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: user register
+      operationId: userregister
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userregisterrequest'
+            example:
+              name: peter
+              email: peter@gmail.com
+              password: peter@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /exercise:
+    get:
+      tags:
+      - Exercise
+      summary: getAllExercise
+      operationId: getAllExercise
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - Exercise
+      summary: create exercise
+      operationId: createexercise
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createexerciserequest'
+            example:
+              name: running
+              description: going to running on the road
+              duration: 10
+              time: 06:00 am
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /exercise/update/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    patch:
+      tags:
+      - Exercise
+      summary: update exercise
+      operationId: updateexercise
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateexerciserequest'
+            example:
+              name: 'walking '
+              description: 'go walk with my friends '
+              duration: '20 minutes '
+              time: 05:40:am
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+      - Exercise
+      summary: get single task
+      operationId: getsingletask
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /exercise/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    delete:
+      tags:
+      - Exercise
+      summary: delete task
+      operationId: deletetask
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    userloginrequest:
+      title: userloginrequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: captain@gamil.com
+        password: captain@gamil.com
+    userregisterrequest:
+      title: userregisterrequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: peter
+        email: peter@gmail.com
+        password: peter@gmail.com
+    createexerciserequest:
+      title: createexerciserequest
+      required:
+      - name
+      - description
+      - duration
+      - time
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        duration:
+          type: integer
+          format: int32
+        time:
+          type: string
+      example:
+        name: running
+        description: going to running on the road
+        duration: 10
+        time: 06:00 am
+    updateexerciserequest:
+      title: updateexerciserequest
+      required:
+      - name
+      - description
+      - duration
+      - time
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        duration:
+          type: string
+        time:
+          type: string
+      example:
+        name: 'walking '
+        description: 'go walk with my friends '
+        duration: '20 minutes '
+        time: 05:40:am
+    updatedtaskrequest:
+      title: updatedtaskrequest
+      required:
+      - name
+      - description
+      - duration
+      - time
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        duration:
+          type: integer
+          format: int32
+        time:
+          type: string
+      example:
+        name: running
+        description: going to walking at evening 2km
+        duration: 40
+        time: 06:00 pm
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+- httpBearer: []
+tags:
+- name: Misc
+  description: ''
+- name: Auth
+  description: ''
+- name: Exercise
+  description: ''
